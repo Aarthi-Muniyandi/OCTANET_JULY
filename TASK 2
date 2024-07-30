@@ -1,0 +1,244 @@
+INDEX.HTML:
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>To-Do List</h1>
+            <form id="taskForm">
+                <input type="text" id="taskInput" placeholder="Enter your task..." required>
+                <select id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <select id="category">
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="hobby">Hobby</option>
+                </select>
+                <button type="submit">Add Task</button>
+            </form>
+        </header>
+        <main>
+            <ul id="taskList"></ul>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+STYLES.CSS:
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #290150, #dbc4f8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #fff;
+}
+
+#app {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+p {
+    margin: 0 0 20px;
+    font-size: 14px;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input, select, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+input {
+    flex: 1;
+    min-width: 150px;
+}
+
+select {
+    flex: 1;
+    min-width: 100px;
+}
+
+button {
+    background: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+main {
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+li.completed {
+    background-color: #d4edda;
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+li:hover {
+    transform: scale(1.02);
+}
+
+.task-info {
+    flex: 1;
+    text-align: left;
+}
+
+.task-info span {
+    display: block;
+    font-size: 12px;
+    color: #666;
+}
+
+.priority {
+    font-weight: bold;
+}
+
+.priority.low {
+    color: #32cd32;
+}
+
+.priority.medium {
+    color: #ffa500;
+}
+
+.priority.high {
+    color: #ff4500;
+}
+
+.delete-button {
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.delete-button:hover {
+    background: #cc0000;
+}
+
+.complete-button {
+    background
+}
+
+APP.JS:
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const taskForm = document.getElementById('taskForm');
+    const taskInput = document.getElementById('taskInput');
+    //const dueDate = document.getElementById('dueDate');
+    const priority = document.getElementById('priority');
+    const category = document.getElementById('category');
+    const taskList = document.getElementById('taskList');
+
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addTask(taskInput.value, priority.value, category.value);
+        taskInput.value = '';
+        priority.value = 'low';
+        category.value = 'work';
+    });
+
+    function addTask(task, priority, category) {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+
+        const taskInfo = document.createElement('div');
+        taskInfo.className = 'task-info';
+        taskInfo.innerHTML = `<strong>${task}</strong>
+                              <span class="priority ${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
+                              <span class="category">${category.charAt(0).toUpperCase() + category.slice(1)}</span>`;
+        li.appendChild(taskInfo);
+
+        const completeButton = document.createElement('button');
+        completeButton.className = 'complete-button';
+        completeButton.textContent = '✔';
+        completeButton.addEventListener('click', () => {
+            li.classList.toggle('completed');
+        });
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = '×';
+        deleteButton.addEventListener('click', () => {
+            taskList.removeChild(li);
+        });
+
+        li.appendChild(completeButton);
+        li.appendChild(deleteButton);
+        taskList.appendChild(li);
+    }
+});
