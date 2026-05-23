@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>To-Do List</h1>
+            <form id="taskForm">
+                <input type="text" id="taskInput" placeholder="Enter your task..." required>
+                <select id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <select id="category">
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="hobby">Hobby</option>
+                </select>
+                <button type="submit">Add Task</button>
+            </form>
+        </header>
+        <main>
+            <ul id="taskList"></ul>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
